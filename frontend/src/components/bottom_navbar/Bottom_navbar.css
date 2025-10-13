@@ -1,0 +1,38 @@
+.bottom_navbar {
+    width: 100%;
+    padding: 3rem 3rem;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom_navbar_container{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #D9D9D9;
+    padding: 1.2rem 2.5rem;
+    border-radius: 0.6rem;
+}
+
+.create_mood{
+    background-color: #268f00;
+    color: #000000;
+    padding: 1rem 2.5rem;
+    border-radius: 0.6rem;
+    border: none;
+    cursor: pointer;
+}
+
+.view_mood{
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 1rem 2.5rem;
+    border-radius: 0.6rem;
+    border: none;
+    cursor: pointer;
+}
