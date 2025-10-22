@@ -3,8 +3,8 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,37 +12,46 @@
 }
 
 .create_mood_container {
-    width: min(720px, 92%);
-    max-height: 80vh;
-    background-color: #FFFFFF;
-    border-radius: 0.8rem;
-    padding: 1rem 1.25rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    overflow: auto;
+    width: 55%;
+    max-height: 86vh;
+    background: #2b2727a6; /* dark warm gray */
+    border-radius: 14px;
+    padding: 2rem 3rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    border: 2px solid #636363;
+    position: relative;
 }
 
 .overlay_header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
 
 .overlay_header h2 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 28px;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: none;
+    font-weight: normal;
+    font-family: 'Anton', sans-serif;
 }
+
+.overlay_header .icon_close { opacity: 0.6; }
 
 .icon_close {
     background: transparent;
     border: none;
     font-size: 1.25rem;
     cursor: pointer;
+    color: #fff;
 }
 
 .overlay_form {
     display: grid;
-    gap: 1rem;
+    gap: 18px;
 }
 
 .form_row_grid {
@@ -59,44 +68,158 @@
 
 .form_row {
     display: grid;
-    gap: 0.5rem;
+    gap: 8px;
 }
 
 .form_row label {
     font-size: 0.9rem;
-    color: #333;
+    color: #ffffff;
 }
 
 .form_row input,
 .form_row textarea {
     width: 100%;
-    padding: 0.6rem 0.75rem;
-    border: 1px solid #e1e1e1;
-    border-radius: 0.5rem;
-    font-size: 0.95rem;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    color: #fff;
+    border: 1.5px solid #636363;
+    background: linear-gradient(135deg, rgba(39, 39, 39, 0.55) 0%, rgb(0, 0, 0) 45%, rgba(39, 39, 39, 0.55) 100%);
+    box-shadow: inset 0 2px 10px rgba(255,255,255,0.02), 0 6px 14px rgba(0,0,0,0.6);
+    resize: none;
+}
+
+.form_row input::placeholder, .form_row textarea::placeholder { color: rgba(255,255,255,0.5); }
+
+.form_row textarea { min-height: 140px; }
+
+.emoji_input_wrap {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.emoji_input_wrap input[readonly] {
+    cursor: pointer;
+}
+
+.emoji_pick_btn {
+    min-width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1.5px solid #636363;
+    background: linear-gradient(135deg, rgba(39, 39, 39, 0.55) 10%, rgb(0, 0, 0) 45%, rgba(39, 39, 39, 0.55) 90%);
+    color: #fff;
+}
+
+.emoji_popover {
+    position: absolute;
+    top: calc(100% + 10px); /* neatly below input */
+    left: 0;                /* align with input's left edge */
+    z-index: 1100;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    border-radius: 12px;
+    overflow: hidden;       /* clip inner scrollbars to rounded corners */
+    background: #1d1d1d;    /* ensure dark surface */
+    border: 1px solid #3f3f3f;
+    box-sizing: border-box;
+    /* Keep within modal width and viewport height */
+    width: min(360px, calc(100% - 16px));
+    max-height: min(60vh, 460px);
+    clip-path: inset(0 round 12px);
+}
+
+/* Improve Emoji Picker search field alignment and spacing */
+.emoji_popover .EmojiPickerReact .epr-search {
+    position: relative;
+}
+.emoji_popover .EmojiPickerReact .epr-search .epr-search-icon {
+    position: absolute !important;
+    left: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    opacity: 0.9;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+.emoji_popover .EmojiPickerReact .epr-search .epr-search-input {
+    height: 40px !important;
+    line-height: 40px !important;
+    padding-left: 48px !important; /* increased gap between icon and placeholder */
+    border-radius: 10px !important;
+}
+.emoji_popover .EmojiPickerReact .epr-search .epr-search-input::placeholder {
+    color: rgba(255,255,255,0.75);
+}
+
+/* On small screens, center the popover and constrain width */
+@media (max-width: 560px) {
+    .emoji_popover {
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(92vw, 360px);
+    }
+}
+
+/* Dark, rounded scrollbars for the modal */
+.create_mood_container {
+    scrollbar-color: #6b6b6b #111111; /* thumb track */
+    scrollbar-width: thin;
+}
+
+/* Dark, rounded scrollbars inside the emoji picker */
+.emoji_popover .EmojiPickerReact,
+.emoji_popover .EmojiPickerReact * {
+    scrollbar-color: #6b6b6b #1a1a1a;
+    scrollbar-width: thin;
+}
+.emoji_popover .EmojiPickerReact {
+    width: 100% !important;  /* fit popover width */
+    max-width: 360px;        /* cap width */
+    border-radius: 12px;     /* match container radius */
+    overflow: hidden;        /* ensure inner scrollbars don't bleed */
+}
+.emoji_popover .EmojiPickerReact *::-webkit-scrollbar { width: 8px; height: 8px; }
+.emoji_popover .EmojiPickerReact *::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+.emoji_popover .EmojiPickerReact *::-webkit-scrollbar-thumb {
+    background: #5f5f5f;
+    border-radius: 10px;
 }
 
 .actions {
     display: flex;
     justify-content: flex-end;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
+    gap: 16px;
+    margin-top: 26px;
+    align-items: center;
 }
 
 .btn {
-    padding: 0.6rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    border: 1px solid transparent;
+    padding: 1rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 400;
+    border: 1.5px solid #636363;
     cursor: pointer;
-}
-
-.btn_ghost {
-    background: transparent;
-    border-color: #ddd;
-}
-
-.btn_primary {
-    background: #111827;
     color: #fff;
+    background: linear-gradient(135deg, rgba(39, 39, 39, 0.55) 10%, rgb(0, 0, 0) 45%, rgba(39, 39, 39, 0.55) 90%);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6), inset 0 2px 8px rgba(255,255,255,0.02);
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+/* Layout tweaks to match mock: two-column top row for date+emoji */
+.form_row_grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+.form_row_grid .form_row { margin-bottom: 0; }
+
+@media (max-width: 720px) {
+    .create_mood_container { padding: 20px; }
+    .form_row_grid { grid-template-columns: 1fr; }
 }

@@ -4,7 +4,7 @@ import './Navbar.css'
 const Navbar = () => {
   return (
     <nav className='navbar'>
-        <h1>Moody</h1>
+        <h1 className='logo'>Moody</h1>
     </nav>
   )
 }

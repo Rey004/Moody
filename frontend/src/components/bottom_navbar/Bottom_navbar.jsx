@@ -12,8 +12,20 @@ const Bottom_navbar = () => {
   return (
     <div className='bottom_navbar'>
       <div className="bottom_navbar_container">
-        <button className="create_mood" onClick={() => setShowModal(true)}>Create Mood</button>
-        <button className="view_mood" onClick={navigateToMoods}>View Mood</button>
+        <button className="create_mood" onClick={() => setShowModal(true)}>
+          <img src="../../assets/Plus.svg" alt="Plus" className="plus_icon" />
+          Add Mood
+        </button>
+        <div className="nav_icon">
+          <img src="../../assets/Music.svg" alt="" />
+          <img src="../../assets/Bar Chart.svg" alt="" />
+          <img src="../../assets/Landscape.svg" alt="" />
+          <img src="../../assets/Settings.svg" alt="" />
+        </div>
+        <button className="view_mood" onClick={navigateToMoods}>
+          <img src="../../assets/Grinning Face.svg" alt="Eye" className="smile_icon" />
+          All Mood
+        </button>
       </div>
       {showModal && (
         <Create_mood_overlay onClose={() => setShowModal(false)} />

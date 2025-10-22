@@ -1,14 +1,36 @@
+@font-face {
+    font-family: Inter;
+    src: url(/fonts/Inter-Regular.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: Anton;
+    src: url(/fonts/AntonSC-Regular.woff2) format("woff2");
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track {
+    background: #111111;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 2px solid #111111;
+}
+
 *{
 margin: 0;
 padding: 0;
 box-sizing: border-box;
-/* font-family: ; */
+font-family: 'Inter', sans-serif;
 }
 
 html, body {
 width: 100%;
 height: 100%;
 overflow-x: hidden;
+color: white;
 }
 
 #root{

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import './Create_mood_overlay.css'
 import axios from 'axios';
+import EmojiPicker from 'emoji-picker-react';
 
 const Create_mood_overlay = ({ onClose }) => {
 
@@ -10,6 +11,7 @@ const Create_mood_overlay = ({ onClose }) => {
   const [emoji, setEmoji] = useState('');
   const [mood, setMood] = useState('');
   const [note, setNote] = useState('');
+  const [showPicker, setShowPicker] = useState(false);
 
   const closeModal = (e) => {
     if (e.target === modalRef.current) {
@@ -26,7 +28,9 @@ const Create_mood_overlay = ({ onClose }) => {
       note
     })
     .then(response => {
-      console.log('Mood added:', response.data);
+      const created = response?.data?.mood || response?.data;
+      // Notify listeners (e.g., Mood page) that a new mood was created
+      window.dispatchEvent(new CustomEvent('mood:created', { detail: created }));
       onClose();
     })
     .catch(error => {
@@ -38,7 +42,7 @@ const Create_mood_overlay = ({ onClose }) => {
     <div ref={modalRef} onClick={closeModal} className='create_mood_overlay'>
       <div className="create_mood_container" role="dialog" aria-modal="true">
         <div className="overlay_header">
-          <h2>Create Mood</h2>
+          <h2>Let’s Record New Mood !!</h2>
           <button className="icon_close" aria-label="Close" onClick={onClose}>✕</button>
         </div>
 
@@ -51,7 +55,36 @@ const Create_mood_overlay = ({ onClose }) => {
 
                   <div className="form_row">
                     <label htmlFor="emoji">Emoji</label>
-                    <input value={emoji} onChange={(e) => setEmoji(e.target.value)} id="emoji" type="text" placeholder="e.g., 😊" required />
+                    <div className="emoji_input_wrap">
+                      <input
+                        id="emoji"
+                        type="text"
+                        value={emoji}
+                        readOnly
+                        placeholder="Pick an emoji"
+                        onClick={() => setShowPicker(true)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="emoji_pick_btn"
+                        aria-label="Pick emoji"
+                        onClick={() => setShowPicker(v => !v)}
+                      >
+                        {emoji || '😊'}
+                      </button>
+                      {showPicker && (
+                        <div className="emoji_popover" onClick={(e)=> e.stopPropagation()}>
+                          <EmojiPicker
+                            theme="dark"
+                            onEmojiClick={(emojiData) => {
+                              setEmoji(emojiData.emoji);
+                              setShowPicker(false);
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
            <div className="form_row">

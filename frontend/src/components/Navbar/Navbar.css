@@ -1,7 +1,13 @@
 .navbar{
     width: 100%;
-    padding: 1.5rem 3rem;
+    padding: 1.5rem 4rem;
     position: fixed;
     top: 0;
     z-index: 1000;
+}
+
+.logo {
+    font-size: 3rem;
+    font-weight: normal;
+    font-family: 'Anton', sans-serif;
 }

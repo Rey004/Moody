@@ -30,11 +30,21 @@ export async function createMood(req, res) {
 export async function updateMood(req, res) {
     try {
         const { id } = req.params;
-        if (!id) return res.status(400).json({ message: "Missing mood id" });
+        const mood = await Mood.findById(id);
 
-        const updatedMood = await Mood.findByIdAndUpdate(id, req.body, { 
+        if (!mood) return res.status(404).json({ message: "Mood not found" });
+
+        // calculate time difference
+        const now = new Date();
+        const diffHours = (now - mood.createdAt) / (1000 * 60 * 60); // convert ms → hours
+
+        if (diffHours > 24) {
+            return res.status(403).json({ message: "Update window expired (24 hours limit reached)" });
+        }
+
+        const updatedMood = await Mood.findByIdAndUpdate(id, req.body, {
             new: true,
-            runValidators: true, 
+            runValidators: true,
         });
 
         if (!updatedMood) return res.status(404).json({ message: "Mood not found" });
